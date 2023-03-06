@@ -1,0 +1,84 @@
+/*
+config-page
+*/
+
+.config-page {
+    background-color: white;
+}
+
+
+.config-page li {
+    line-height: 1.2;
+}
+
+.config-page form input {
+    line-height: 1.5;
+    margin-bottom: 5px;
+}
+
+.config-page form input.submit {
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+/*
+video-overlay-page
+*/
+
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.video-overlay-page #entirePage {
+    /* https://medium.com/developer-rants/what-if-height-100vh-is-bigger-than-your-screen-7f39c62ac170 */
+    width: 100vw;
+    height: 99%;
+    min-height: 99%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    //font-size: clamp(.5rem, 2vw, 1.5em);
+    font-size: calc(12px + .5vw);
+
+}
+
+.video-overlay-page #entirePageExceptBorders {
+    /* so that in full screen mouse at edge won't trigger hover */
+    width: 100%;
+    height: 100%;
+    margin: 1px;
+}
+
+.video-overlay-page #entirePage p{
+     line-height: 1;
+     padding: 5px;
+     margin: 0;
+}
+
+.video-overlay-page #entirePageExceptBorders:hover #cursesAndBlessingsContainer {
+  border-style: solid;
+  border-color: blue;
+}
+
+.video-overlay-page #cursesAndBlessingsContainer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 25vw;
+    height: 10vw;
+}
+
+.video-overlay-page  #cursesAndBlessings {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+
+.video-overlay-page #cursesAndBlessingsContainer:hover #cursesAndBlessings {
+    display:block;
+    background-color:lightblue;
+}
