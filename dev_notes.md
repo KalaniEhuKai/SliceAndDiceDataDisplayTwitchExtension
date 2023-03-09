@@ -3,7 +3,6 @@ If you find yourself looking at this code, I apologize in advance.  I don't real
 
 
 # TODO
-Doesn't work with Blessings.  Need to also pull that down an check for that, too.
 The mouseexit doesnt work consistently when leaving the screen
 Add the curse cost to the display info
 Should it only update on mouseover and not continuously?
@@ -23,20 +22,20 @@ put Warnings section in Config.
 1. Start stream
 1. Make sure to end stream and set Status to Local Test when done
 
-# Steps for updating SliceAndDiceAlmanacCursesData:
+# Steps for updating SliceAndDiceAlmanacCursesData / SliceAndDiceAlmanacBlessingsData:
 To export newer versions of the file:
-1. Download the data file from https://docs.google.com/spreadsheets/d/1QeTmPwCAOJCBKy5VgKhupcLrtSFuFa0fPT_zuShv3M8/gviz/tq?tqx=out:json&sheet=Curses
+1. Download the data file from https://docs.google.com/spreadsheets/d/1QeTmPwCAOJCBKy5VgKhupcLrtSFuFa0fPT_zuShv3M8/gviz/tq?tqx=out:json&sheet=Curses (or sheet=Blessings)
 2. Rename it SliceAndDiceAlmanacCursesData.js
 3. Remove the text at the start of the file before the first { 
     1. like /*O_o*/ google.visualization.Query.setResponse(
-4. Replace what you removed with sliceAndDiceAlmanacCursesData = '  
-    1. so it should now be like sliceAndDiceAlmanacCursesData = '{"version":"...
+4. Replace what you removed with var sliceAndDiceAlmanacCursesData = '  
+    1. so it should now be like var sliceAndDiceAlmanacCursesData = '{"version":"...
+    2. (or var sliceAndDiceAlmanacCursesData ...) 
 5. Remove the text at the end of the file after the last }
     1. like );
 6. Replate what you removed with ';
     1. so it should not be like };
 7. Replace '\n' with '\\n' everywhere in the file
-8. Refresh this webpage if you still have it open.
 
 
 # Config references:

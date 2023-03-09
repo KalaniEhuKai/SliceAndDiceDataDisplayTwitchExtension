@@ -58,10 +58,11 @@ function getCursesAndBlessingsDisplayHtml(sliceAndDiceData){
         		  //cursesAndBlessingsDisplayText += " => "
         		  cursesAndBlessingsDisplayHtml += "<p>";
         		  try{
-        		    cursesAndBlessingsDisplayHtml += lookupAlmanacCurseDescription(curseOrBlessing);
+        		    var curseOrBlessingCostAndDescription = lookupAlmanacCurseOrBlessingTypeAndCostAndDescription(curseOrBlessing);
+        		    cursesAndBlessingsDisplayHtml += curseOrBlessingCostAndDescription.type + "[" + curseOrBlessingCostAndDescription.cost + "]: " + curseOrBlessingCostAndDescription.description;
         		  }catch(err){
-        		    cursesAndBlessingsDisplayHtml += curseOrBlessing + "(DESCRIPTION_NOT_FOUND)";
-        			console.log("Warning: could not find AlmanacCurseDescription for curseOrBlessing '" +  curseOrBlessing + "' due to err:" + err);
+        		    cursesAndBlessingsDisplayHtml += curseOrBlessing + " (DATA_NOT_FOUND)";
+        			console.log("Warning: could not find AlmanacCurseDescription for curseOrBlessing '" +  curseOrBlessing + "' due to err: " + err);
         			console.log(err); //For things like TypeError which have a call stack
         			couldntFindACurseDescription = true;
         		  }
@@ -71,7 +72,7 @@ function getCursesAndBlessingsDisplayHtml(sliceAndDiceData){
         		});
 
         		if(couldntFindACurseDescription){
-        			recordProcessingIssue("Warning: Could not find at least one description for a curse/blessing.  This could be a bug in this page, or you may need to update the SliceAndDiceAlmanacCursesData file contents.  Browser Console log should have more details.  To update the Almanac data, view this page's source and look for ***HOW TO UPDATE ALMANAC CURSES DATA***");
+        			recordProcessingIssue("Warning: Could not find at least one description for a curse/blessing.  This could be a bug in this page, or the extension developer may need to update the almanac file contents.  Browser Console log should have more details.");
         		}
         	  }
 
