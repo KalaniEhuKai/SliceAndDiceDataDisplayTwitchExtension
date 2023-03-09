@@ -23,7 +23,7 @@ async function initialize(){
 async function update(){
     console.log("***** update *****");
 
-    clearDisplay();
+    clearDataDisplay();
 
     var sliceAndDiceData = await getOneDriveSharedFileContents(broadcasterConfigData["sliceAndDiceDataFileShareLink"]);
 
@@ -60,7 +60,7 @@ function getCursesAndBlessingsDisplayHtml(sliceAndDiceData){
         		  try{
         		    cursesAndBlessingsDisplayHtml += lookupAlmanacCurseDescription(curseOrBlessing);
         		  }catch(err){
-        		    cursesAndBlessingsDisplayHtml += "DESCRIPTION_NOT_FOUND(" + curseOrBlessing + ")";
+        		    cursesAndBlessingsDisplayHtml += curseOrBlessing + "(DESCRIPTION_NOT_FOUND)";
         			console.log("Warning: could not find AlmanacCurseDescription for curseOrBlessing '" +  curseOrBlessing + "' due to err:" + err);
         			console.log(err); //For things like TypeError which have a call stack
         			couldntFindACurseDescription = true;
@@ -97,11 +97,37 @@ function displayData(cursesAndBlessingsHtml){
     $("#cursesAndBlessings").html(cursesAndBlessingsHtml);
 }
 
-function clearDisplay(){
-
-    $("#cursesAndBlessings").html("<p>Data update pending...</p>");
+function clearDataDisplay(){
+    //Shouldn't really clear data, that just causes strobing for viewer.  Should probably add a spinner icon while processing...
+    //$("#cursesAndBlessings").html("<p>Data update pending...</p>");
     //$("#processingIssues").html("");
 }
+
+
+
+function initializeAllShowHideElements(){
+    //$('#cursesAndBlessingsContainer').hide();
+    $('#cursesAndBlessings').hide();
+}
+
+function onMouseHoverEnterEntirePageExceptBorders(){
+    $('#cursesAndBlessingsContainer').css('border', '3px solid blue');
+}
+function onMouseHoverOutEntirePageExceptBorders(){
+    $('#cursesAndBlessingsContainer').css('border', '');
+}
+function onMouseHoverEnterCursesAndBlessings(){
+    $('#cursesAndBlessingsContainer').css('border', '');
+    $('#cursesAndBlessings').show();
+}
+function onMouseHoverOutCursesAndBlessings(){
+    $('#cursesAndBlessingsContainer').css('border', '3px solid blue');
+    $('#cursesAndBlessings').hide();
+    //TODO there's still an issue since this goes to edge of page that if people move mouse out directly from here that it won't dissapear.
+    //Probably need to keep variables to see if still inside the entire page without borders to give space on outside, and maybe no do the propagating elements thing
+    //Or maybe need to go back to :hover on entire page to put it in a certain state, and then all the mouse outs etc are based on overall state (assuming :hover works better
+}
+
 
 $(async function() {
     console.log('video_overlay page loaded');
@@ -109,4 +135,26 @@ $(async function() {
      //Cannot initialize here.  see https://discuss.dev.twitch.tv/t/config-js-twitch-configuration-broadcaster-undefined/37745/3
 
     //register element events here
+
+    initializeAllShowHideElements();
+
+    $('#entirePageExceptBorders')
+    .on('mouseover', function (event) {
+        event.stopPropagation();
+        onMouseHoverEnterEntirePageExceptBorders();
+    })
+    .on('mouseout', function (event) {
+        event.stopPropagation();
+        onMouseHoverOutEntirePageExceptBorders();
+    });
+
+      $('#cursesAndBlessingsContainer')
+        .on('mouseover', function (event) {
+            event.stopPropagation();
+            onMouseHoverEnterCursesAndBlessings();
+        })
+        .on('mouseout', function (event) {
+            event.stopPropagation();
+            onMouseHoverOutCursesAndBlessings();
+        });
 });

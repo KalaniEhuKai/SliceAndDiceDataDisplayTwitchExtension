@@ -4,6 +4,10 @@ If you find yourself looking at this code, I apologize in advance.  I don't real
 
 # TODO
 Doesn't work with Blessings.  Need to also pull that down an check for that, too.
+The mouseexit doesnt work consistently when leaving the screen
+Add the curse cost to the display info
+Should it only update on mouseover and not continuously?
+put Warnings section in Config.
 
 # Steps for testing:
 1. Zip all of the local files (extension content)

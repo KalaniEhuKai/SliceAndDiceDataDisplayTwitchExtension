@@ -64,7 +64,8 @@
                     <input type="text" id="sliceAndDiceDataFileShareLink" name="sliceAndDiceDataFileShareLink" required>
                 </div>
                 <div>
-                    <label for="extensionRefreshTime">Extension data refresh time (seconds, minimum=1): </label>
+                    <!--TODO set a default value if there's no saved data yet-->
+                    <label for="extensionRefreshTime">Extension data refresh time** (seconds, minimum=1): </label>
                     <input type="number" id="extensionRefreshTime" name="extensionRefreshTime" required min="1">
                 </div>
                 <div>
@@ -92,6 +93,7 @@
         </ul>
         <h2>FAQ</h2>
         <p>* Microsoft OneDrive was chosen to make the slide and dice file available online because it is a free, reputable product with simple setup, and shared OneDrive files can be downloaded programmatically (unlike google drive which requires google APIs used in a registered cloud app.)</p>
+        <p>** The extension will pull the file from your OneDrive share on every refresh.  Not sure if setting this low will potentially cause problems.</p>
         <p>(Note that the extension code to get the data from the shared file URL is specific to the REST API that OneDrive uses.  If a better way of exposing the data file online is found, the extension would need to be updated to use it)</p>
     </div>
 </body>

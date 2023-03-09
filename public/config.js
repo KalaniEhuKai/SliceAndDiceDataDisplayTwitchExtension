@@ -76,6 +76,8 @@ function setStatus(saveState){
 $(function(){
     console.log("config page loaded");
 
+    //TODO: might see if doing a folder junction avoids the OneDrive sync delay better than the hardlink
+
     //Cannot initialize here.  see https://discuss.dev.twitch.tv/t/config-js-twitch-configuration-broadcaster-undefined/37745/3
 
     $("#submitFormButton").click(function(){ saveConfigData(); });

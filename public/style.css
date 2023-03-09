@@ -33,7 +33,7 @@ body, html {
 
 .video-overlay-page #entirePage {
     /* https://medium.com/developer-rants/what-if-height-100vh-is-bigger-than-your-screen-7f39c62ac170 */
-    width: 100vw;
+    width: 99vw;
     height: 99%;
     min-height: 99%;
     box-sizing: border-box;
@@ -42,14 +42,16 @@ body, html {
 
     //font-size: clamp(.5rem, 2vw, 1.5em);
     font-size: calc(12px + .5vw);
-
+    color: white;
 }
 
 .video-overlay-page #entirePageExceptBorders {
     /* so that in full screen mouse at edge won't trigger hover */
-    width: 100%;
-    height: 100%;
-    margin: 1px;
+    width: 98%;
+    height: 95%;
+    margin-left: 1.5vw;
+    margin-top: 1.5vw;
+    /*background-color:blue;*/
 }
 
 .video-overlay-page #entirePage p{
@@ -58,27 +60,56 @@ body, html {
      margin: 0;
 }
 
+/*
 .video-overlay-page #entirePageExceptBorders:hover #cursesAndBlessingsContainer {
   border-style: solid;
   border-color: blue;
 }
+*/
 
 .video-overlay-page #cursesAndBlessingsContainer {
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 25vw;
-    height: 10vw;
+    width: 26.5vw;
+    height: 8.75vw;
+
+    /*
+    https://stackoverflow.com/questions/5581799/how-to-stretch-div-height-to-fill-parent-div-css
+    */
+    display: flex;
+
+    border-radius: 1vw;
+    /*border-style: solid;
+    border-color: blue;*/
+
+    margin: 0;
 }
 
 .video-overlay-page  #cursesAndBlessings {
-    width: 100%;
-    height: 100%;
+    /*
+    https://stackoverflow.com/questions/29467660/how-to-stretch-children-to-fill-cross-axis
+    */
+    flex: 1;
     overflow: auto;
-    display: none;
+    display: block;
+
+    border-style: solid;
+    border-color: blue;
+    border-radius: 1vw;
+
+    background-color:black;
+
+    padding-left: .7vw;
+    padding-top: .3vw;
 }
 
+/*
 .video-overlay-page #cursesAndBlessingsContainer:hover #cursesAndBlessings {
-    display:block;
-    background-color:lightblue;
+    display: flex;
 }
+
+.video-overlay-page #cursesAndBlessings:hover #cursesAndBlessingsContainer {
+    display: none;
+}
+*/

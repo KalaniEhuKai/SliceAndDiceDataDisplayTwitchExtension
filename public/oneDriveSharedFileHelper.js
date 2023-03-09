@@ -15,24 +15,25 @@ async function getOneDriveSharedFileDownloadUrl(oneDriveSharedFileUrl){
     //See https://github.com/microsoftgraph/msgraph-sdk-javascript/issues/16
     //See https://learn.microsoft.com/en-us/graph/api/driveitem-get-content?view=graph-rest-1.0&tabs=javascript
 
-    //console.log("getOneDriveSharedFileRestApiUrl- oneDriveSharedFileUrl: " + oneDriveSharedFileUrl);
+    console.log("getOneDriveSharedFileRestApiUrl- oneDriveSharedFileUrl: " + oneDriveSharedFileUrl);
 
     var base64EncodedSharedFileUrl = btoa(oneDriveSharedFileUrl);
-    //console.log("getOneDriveSharedFileRestApiUrl- base64EncodedSharedFileUrl: " + base64EncodedSharedFileUrl);
+    console.log("getOneDriveSharedFileRestApiUrl- base64EncodedSharedFileUrl: " + base64EncodedSharedFileUrl);
 
-    if(! base64EncodedSharedFileUrl.endsWith('=') ){
-        throw "getOneDriveSharedFileRestApiUrl expected base64EncodedSharedFileUrl to end in = but it didn't";
-    }
+    var base64EncodedSharedFileUrlEndsWithEquals = base64EncodedSharedFileUrl.endsWith('=');
+    var base64EncodedSharedFileUrlWithoutEndingEquals = base64EncodedSharedFileUrlEndsWithEquals ? base64EncodedSharedFileUrl.slice(0, -1) : base64EncodedSharedFileUrl;
 
-    var unPaddedBase64SharedFileUrl = base64EncodedSharedFileUrl.slice(0, -1).replace(/\//g,'_').replace(/\+/g,'-');
-    //console.log("getOneDriveSharedFileRestApiUrl- unPaddedBase64SharedFileUrl: " + unPaddedBase64SharedFileUrl);
+    console.log("getOneDriveSharedFileRestApiUrl- base64EncodedSharedFileUrlWithoutEndingEquals: " + base64EncodedSharedFileUrlWithoutEndingEquals);
+
+    var unPaddedBase64SharedFileUrl = base64EncodedSharedFileUrlWithoutEndingEquals.replace(/\//g,'_').replace(/\+/g,'-');
+    console.log("getOneDriveSharedFileRestApiUrl- unPaddedBase64SharedFileUrl: " + unPaddedBase64SharedFileUrl);
 
     var oneDriveSharedDriveItemInfoRestPath = "https://api.onedrive.com/v1.0/shares/u!" +  unPaddedBase64SharedFileUrl + "/driveItem";//?select=id,@microsoft.graph.downloadUrl";
-    //console.log("getOneDriveSharedFileRestApiUrl- oneDriveSharedDriveItemInfoRestPath: " + oneDriveSharedDriveItemInfoRestPath);
+    console.log("getOneDriveSharedFileRestApiUrl- oneDriveSharedDriveItemInfoRestPath: " + oneDriveSharedDriveItemInfoRestPath);
 
     var oneDriveSharedDriveItemInfoResponse = await fetch(oneDriveSharedDriveItemInfoRestPath);
-    //console.log("getOneDriveSharedFileRestApiUrl- oneDriveSharedDriveItemInfoResponse: ");
-    //console.log(oneDriveSharedDriveItemInfoResponse);
+    console.log("getOneDriveSharedFileRestApiUrl- oneDriveSharedDriveItemInfoResponse: ");
+    console.log(oneDriveSharedDriveItemInfoResponse);
 
     var oneDriveSharedDriveItemInfoJson = await oneDriveSharedDriveItemInfoResponse.json();
     //console.log("getOneDriveSharedFileRestApiUrl- oneDriveSharedDriveItemInfoJson: ");
