@@ -25,7 +25,7 @@ function saveConfigData(){
 
     var configData = {}
     configData["sliceAndDiceDataFileShareLink"]=$('input[id=sliceAndDiceDataFileShareLink]').val();
-    configData["extensionRefreshTime"]=$('input[id=extensionRefreshTime]').val();
+    configData["minimumRefreshTimePerUser"]=$('input[id=minimumRefreshTimePerUser]').val();
 
     console.log("configData:");
     console.log(configData);
@@ -45,7 +45,7 @@ function initialize(){
         var broadcasterConfigJson = JSON.parse(broadcasterConfig.content);
 
         $('input[id=sliceAndDiceDataFileShareLink]').val(broadcasterConfigJson["sliceAndDiceDataFileShareLink"]);
-        $('input[id=extensionRefreshTime]').val(broadcasterConfigJson["extensionRefreshTime"]);
+        $('input[id=minimumRefreshTimePerUser]').val(broadcasterConfigJson["minimumRefreshTimePerUser"]);
     } else {
         setStatus(SaveState.NoneSaved);
     }
@@ -77,6 +77,11 @@ $(function(){
     console.log("config page loaded");
 
     //Cannot initialize here.  see https://discuss.dev.twitch.tv/t/config-js-twitch-configuration-broadcaster-undefined/37745/3
+
+    $("#requirements").load("userGuide/instructions-streamer.html #requirements");
+    $("#steps").load("userGuide/instructions-streamer.html #steps");
+    $("#thanks").load("userGuide/index.html #thanks");
+
 
     $("#submitFormButton").click(function(){ saveConfigData(); });
 

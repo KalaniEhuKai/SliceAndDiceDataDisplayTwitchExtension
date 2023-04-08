@@ -31,7 +31,7 @@ async function update(){
 
     displayData(cursesAndBlessings);
 
-    setTimeout(update, broadcasterConfigData["extensionRefreshTime"] * 1000);
+    setTimeout(update, broadcasterConfigData["minimumRefreshTimePerUser"] * 1000);
 }
 
 function getCursesAndBlessingsDisplayHtml(sliceAndDiceData){

@@ -4,9 +4,7 @@ If you find yourself looking at this code, I apologize in advance.  I don't real
 
 # TODO
 The mouseexit doesnt work consistently when leaving the screen
-Add the curse cost to the display info
-Should it only update on mouseover and not continuously?
-put Warnings section in Config.
+Change it to refresh data on user interaction rather than timer.
 
 # Steps for testing:
 1. Zip all of the local files (extension content)
@@ -38,16 +36,13 @@ To export newer versions of the file:
 7. Replace '\n' with '\\n' everywhere in the file
 
 
-# Config references:
+# References:
 
 https://dev.twitch.tv/docs/tutorials/extension-101-tutorial-series/config-service/
 https://github.com/sonia145/extensions-101/tree/step-2
 https://github.com/abdullahmorrison/AlveusTwitchExtension/blob/main/public/index.html
 https://dev.twitch.tv/docs/extensions/reference/#helper-configuration
 https://discuss.dev.twitch.tv/t/how-does-config-js-work-and-how-to-set-it-up/36758/2
-
-
-# Overlay references:
 
 
 

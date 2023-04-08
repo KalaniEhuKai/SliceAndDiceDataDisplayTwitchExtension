@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instructions for Streamers</title>
+</head>
+<body>
+  <h1>Instructions for Streamers</h1>
+
+  <div id="install">
+    <h2>Install extension</h2>
+    <p>1. Navigate to https://dashboard.twitch.tv/extensions</p>
+    <p>2. Search for "SliceAndDice Data Overlay"</p>
+    <p>3. Click Add button</p>
+    <p>4. Follow the instructions to configure the extension (also included below in this page)</p>
+  </div>
+
+  <h2>Configure extension</h2>
+
+  <p><i>Follow these instructions when configuring the extension in the twitch console.</i></p>
+
+  <div id="requirements">
+    <h3>Review the following requirements</h3>
+    <p>This extension requires making your local Slice And Dice data file available online.  You will have to create or use an existing Microsoft Account and install the Microsoft OneDrive Sync program.</p>
+    <p><span style="color:#f00;">Warning: </span>Recommended to NOT use this extension if you have internet data caps or pay per usage, as the slice and dice data file gets very large (it contains all run histories).</p>
+    <p><span style="color:#f00;">Warning: </span>Recommended to back up your slice and dice data file before using this extension, and frequently afterwards.  While there is no reason to expect that syncing the file will mess it up, it's best to be cautious.</p>
+    <p><span style="color:#f00;">Warning: </span>Recommended to create and use a new Microsoft Account to be cautious and avoid any potential disruption of existing accounts you use.</p>
+  </div>
+
+  <div id="steps">
+    <h3>Perform the following steps</h3>
+    <ol>
+      <li>Install/Setup OneDrive
+        <ol>
+          <li>Create a new Microsoft account.</li>
+          <ul>
+            <li>You can use an existing Microsoft account, but it's recommended to create a new one just to be cautious to prevent any potential disruption with your existing accounts.</li>
+          </ul>
+          <li>Follow <a href="https://www.microsoft.com/en-us/microsoft-365/onedrive/download">this guide</a> to install/setup OneDrive
+            <ul>
+              <li>If you are already using OneDrive, you can configure it for an additional account. See <a href="https://support.microsoft.com/en-us/office/how-to-add-an-account-in-onedrive-31b59063-5a94-4847-b846-c13b9e7635e2">here</a></li>
+              <li>You can turn Of Documents/Picures/Desktop backup if you don't want anything besides the Slice And Dice data file getting synced</li>
+              <li>Note where it creates the root folder - may be like <b>C:\Users\_user_name_\OneDrive</b></li>
+            </ul>
+          </li>
+        </ol>
+      </li>
+      <br>
+      <li>Configure OneDrive sync to include Slice And Dice data file
+        <ol>
+          <li>Find your data file - may be like  <b>C:\Users\_user_name_\.prefs\slice-and-dice-2</b> (no extension)</li>
+          <li>Create a hard link (similar to symbolic link) so that the OneDrive synced folder will pick up that file
+            <ol>
+              <li>Open a cmd prompt as administrator (right click the command prompt app and select run as administrator), and run the following command (updating if your locations were not the same as described above):</li>
+              <li><b>mklink /h %UserProfile%\OneDrive\slice-and-dice-2 %UserProfile%\.prefs\slice-and-dice-2</b></li>
+            </ol>
+        </ol>
+      </li>
+      <br>
+      <li>Configure OneDrive Sharing to provide slice and dice data file over the internet with a read-only link
+        <ol>
+          <li>WARNING: anyone who finds the link to your file can read it. There shouldn't be any sensitive information in the file, but review it if you want to be extra cautious.</li>
+          <li>In the OneDrive folder, right click on slice-and-dice-2 file, and select OneDrive > Share
+            <ol>
+              <li>Set it to Share the link with Anyone, Can view, hit Apply</li>
+              <li>Copy the link</li>
+            </ol>
+        </ol>
+      </li>
+    </ol>
+  </div>
+
+  <p><i>Apply appropriate settings values when configuring the extension in the twitch console</i></p>
+
+  <div id="beforestream">
+    <h2>Refresh file sync before each stream</h2>
+    <p>Microsoft OneDrive seems to 'sleep' on syncing the file if it hasn't been modified in a while.  To get it so that the extension sees the updates soon after you start playing, pause and restart syncing by doing the following:</p>
+    <p>Click on onedrive in the notification area. Settings gear icon > Pause syncing > 2 hours.  Click on onedrive in the notification area, and hit unpause at the top.</p>
+    <p>See the troubleshooting section for more ideas to get this working quickly and reliably.</p>
+  </div>
+
+  <div id="troubleshooting">
+    <h2>Troubleshooting</h2>
+    <ul>
+      <li>
+        <p>If you are getting a delay where OneDrive is not syncing your file for a while, try the following:</p>
+        <ul>
+          <li>Open the folder where the SND data is Windows explorer, and refresh. Open the Onedrive folder locally in windows explorer, and refresh.  Right click the file > OneDrive > View online .  Maybe it will behave if it knows you're paying attention.</li>
+          <li>Pause then restart syncing.  Click on onedrive in the notification area. Settings gear icon > Pause syncing > 2 hours.  Click on onedrive in the notification area, and hit unpause at the top. </li>
+          <li>It could help to do OneDrive->Setting-> Settings-> Uncheck File On-Demand feature.</li>
+        </ul>
+      </li>
+      <li>
+        <p>If anything is not working with the extension, please view your browser's development console where the extension is shown on screen, look for errors, and contact me.  TODO: Ideally it would go somewhere only visible to broadcaster.</p>
+      </li>
+    </ul>
+  </div>
+
+  <div id="faq">
+    <h2>FAQ</h2>
+    <h4>Why is this using Microsoft OneDrive?</h4>
+    <p>Microsoft OneDrive was chosen to make the slide and dice file available online because it is a free, reputable product with simple setup, and shared OneDrive files can be downloaded programmatically (unlike google drive which requires google APIs used in a registered cloud app.)</p>
+    <h4>Could I use a URL from some other online file share instead if I sync the slice and dice data file there?</h4>
+    <p>The extension code that fetches the data from the shared file URL is specific to the REST API that OneDrive uses.  If a better way of exposing the data file online is found, the extension would need to be updated to use it.</p>
+    <h4>Why should I create a new Microsoft account for this?</h4>
+    <p>It likely is not necessary, but this is recommended to prevent any impact on existing Microsoft accounts you have, just in case the way the extension is using the onedrive file sharing goes against any Microsoft terms of service.</p>
+    <p>The extension could cause a high volume of reads on the (large) shared file, as it will pull the file from your OneDrive share every time that each user pulls data from it.</p>
+  </div>
+</body>
+</html>
