@@ -1,11 +1,5 @@
 # SliceAndDiceDataDisplayTwitchExtension
 
-<details>
-  <summary>About</summary>
-  <p>
+SliceAndDiceDataDisplay Twitch Extension provides contextual data overlay for the game Slice And Dice.
 
-`<!-- include the contents of the HTML file here -->`
-`<iframe src="public/userGuide/index.html" frameborder="0" style="width:100%;height:500px;"></iframe>`
-
-  </p>
-</details>
+See the <a href="public/userGuide/index.html">user guide</a> for more information.
