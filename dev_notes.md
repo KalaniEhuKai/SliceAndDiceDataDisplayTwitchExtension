@@ -26,6 +26,15 @@ Consider changing it to display curses data when hovering over the settings icon
 1. Start stream
 1. Make sure to end stream and set Status to Local Test when done
 
+## Test cases
+1. When user hovers over the stream, then borders appear showing locations of context data areas
+1. When user enters hover over a context data area, then context data content appears
+1. When user enters hover over a context data area for the first time, then context data is updated
+1. When user re-enters hover over a context data area, and time elapsed since last update > min refresh time per user setting, then context data is updated
+1. When user doesn't move mouse while hovering over stream window, and a short time passes (slightly longer if context data content is displayed vs just the area borders), then the overlay disappears after a short time
+1. When user moves mouse out of stream window, then the overlay disappears (known bug on moving mouse out of bottom of window)
+1. When user moves mouse to edge of screen when stream is fullscreen, then the overlay disappears
+
 # Steps for updating SliceAndDiceAlmanacCursesData / SliceAndDiceAlmanacBlessingsData:
 To export newer versions of the file:
 1. Download the data file from https://docs.google.com/spreadsheets/d/1QeTmPwCAOJCBKy5VgKhupcLrtSFuFa0fPT_zuShv3M8/gviz/tq?tqx=out:json&sheet=Curses (or sheet=Blessings)
