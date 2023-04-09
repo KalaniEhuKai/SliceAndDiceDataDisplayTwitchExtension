@@ -3,9 +3,6 @@ If you find yourself looking at this code, I apologize in advance.  I don't real
 
 
 # TODO
-
-Confirm that 2nd MSFT OneNote account works
-
 Change it to refresh data on user interaction rather than timer.
 
 Consider getting rid of all the stuff that makes hover mouse events avoid the edge of the screen to avoid showing things when fullscreen with mouse at edge.  It makes it slightly ugly and adds a lot of complexity, and isn't really necessary with the movement-based hiding.
@@ -41,6 +38,9 @@ To export newer versions of the file:
     1. so it should not be like };
 7. Replace '\n' with '\\n' everywhere in the file
 
+# Steps for updating UserGuide pages on github pages  (https://pages.github.com/)
+1. View what all pages are at https://kalaniehukai.github.io/SliceAndDiceDataDisplayTwitchExtension/public/userGuide/index.html
+2. In the github repro, open each file to view the contents (this seems to then update the reference that github pages caches or something)
 
 # References:
 

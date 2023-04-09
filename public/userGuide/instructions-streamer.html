@@ -25,7 +25,7 @@
     <p>This extension requires making your local Slice And Dice data file available online.  You will have to create or use an existing Microsoft Account and install the Microsoft OneDrive Sync program.</p>
     <p><span style="color:#f00;">Warning: </span>Recommended to NOT use this extension if you have internet data caps or pay per usage, as the slice and dice data file gets very large (it contains all run histories).</p>
     <p><span style="color:#f00;">Warning: </span>Recommended to back up your slice and dice data file before using this extension, and frequently afterwards.  While there is no reason to expect that syncing the file will mess it up, it's best to be cautious.</p>
-    <p><span style="color:#f00;">Warning: </span>Recommended to create and use a new Microsoft Account to be cautious and avoid any potential disruption of existing accounts you use.</p>
+    <p><span style="color:#f00;">Warning: </span>Recommended to create and use a new Microsoft Account, simply to be cautious about preventing any potential disruption with your existing accounts, in case the usage pattern of the extension might be against terms of service.</p>
   </div>
 
   <div id="steps">
@@ -35,11 +35,10 @@
         <ol>
           <li>Create a new Microsoft account.</li>
           <ul>
-            <li>You can use an existing Microsoft account, but it's recommended to create a new one just to be cautious to prevent any potential disruption with your existing accounts.</li>
+            <li>You can use an existing Microsoft account, but it's recommended to create a new one just to be cautious about preventing any potential disruption with your existing accounts, in case the usage pattern of the extension might be against terms of service.  See UserGuide FAQ for more information.</li>
           </ul>
           <li>Follow <a href="https://www.microsoft.com/en-us/microsoft-365/onedrive/download">this guide</a> to install/setup OneDrive
             <ul>
-              <li>If you are already using OneDrive, you can configure it for an additional account. See <a href="https://support.microsoft.com/en-us/office/how-to-add-an-account-in-onedrive-31b59063-5a94-4847-b846-c13b9e7635e2">here</a></li>
               <li>You can turn Of Documents/Picures/Desktop backup if you don't want anything besides the Slice And Dice data file getting synced</li>
               <li>Note where it creates the root folder - may be like <b>C:\Users\_user_name_\OneDrive</b></li>
             </ul>
@@ -99,13 +98,17 @@
 
   <div id="faq">
     <h2>FAQ</h2>
+
     <h4>Why is this using Microsoft OneDrive?</h4>
     <p>Microsoft OneDrive was chosen to make the slide and dice file available online because it is a free, reputable product with simple setup, and shared OneDrive files can be downloaded programmatically (unlike google drive which requires google APIs used in a registered cloud app.)</p>
+
     <h4>Could I use a URL from some other online file share instead if I sync the slice and dice data file there?</h4>
     <p>The extension code that fetches the data from the shared file URL is specific to the REST API that OneDrive uses.  If a better way of exposing the data file online is found, the extension would need to be updated to use it.</p>
+
     <h4>Why should I create a new Microsoft account for this?</h4>
     <p>It likely is not necessary, but this is recommended to prevent any impact on existing Microsoft accounts you have, just in case the way the extension is using the onedrive file sharing goes against any Microsoft terms of service.</p>
     <p>The extension could cause a high volume of reads on the (large) shared file, as it will pull the file from your OneDrive share every time that each user pulls data from it.</p>
+    <p>If you are already using OneDrive on your computer already, consider researching more regarding if  a high volume of calls to fetch a shared file could be against any terms of service.</p>
   </div>
 </body>
 </html>
