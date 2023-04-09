@@ -96,7 +96,7 @@ function getCursesAndBlessingsDisplayHtml(sliceAndDiceData){
         		  try{
         		    var curseOrBlessingCostAndDescription = lookupAlmanacCurseOrBlessingTypeAndCostAndDescription(curseOrBlessing);
         		    var curseOrBlessingCostMarker = curseOrBlessingCostAndDescription.type == "Curse" ? "" : "-";
-        		    cursesAndBlessingsDisplayHtml += "[" + curseOrBlessingCostMarker + curseOrBlessingCostAndDescription.cost + "]: ";
+        		    cursesAndBlessingsDisplayHtml += "[" + curseOrBlessingCostMarker + curseOrBlessingCostAndDescription.cost + "] ";
         		    cursesAndBlessingsDisplayHtml += curseOrBlessingCostAndDescription.description;
         		  }catch(err){
         		    cursesAndBlessingsDisplayHtml += curseOrBlessing + " (DATA_NOT_FOUND)";
