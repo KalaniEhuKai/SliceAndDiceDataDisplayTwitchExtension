@@ -1,5 +1,7 @@
 var broadcasterConfigData;
 
+var lastUpdatedTime = 0;
+
 var isContextDataDisplayed = false;
 
 var isInContext
@@ -22,22 +24,50 @@ async function initialize(){
         throw "extension has not been configured by broadcaster and will not work.  Shouldn't be able to get here based on twitch supposed to not show if no config saved.";
     }
 
-    //trigger initial update
-    update();
+    //trigger initial update - uncomment this if want to always do a refresh immediately when extension is loaded instead of based on user interaction
+    //updateData();
 }
 
-async function update(){
-    console.log("***** update *****");
+async function updateData(){
+    console.log("updateData called");
 
-    clearDataDisplay();
+    var now = new Date();
+    console.log("now" + now);
+    var doUpdate = hasMinimumRefreshTimeHasElapsedSinceLastUpdate(now);
 
-    var sliceAndDiceData = await getOneDriveSharedFileContents(broadcasterConfigData["sliceAndDiceDataFileShareLink"]);
+    if(doUpdate){
+        console.log("***** updating data *****");
+        updateLastUpdatedTime(now)
 
-    var cursesAndBlessingsHtml = await getCursesAndBlessingsDisplayHtml(sliceAndDiceData);
+        clearDataDisplay();
 
-    displayData(cursesAndBlessingsHtml);
+        var sliceAndDiceData = await getOneDriveSharedFileContents(broadcasterConfigData["sliceAndDiceDataFileShareLink"]);
 
-    setTimeout(update, broadcasterConfigData["minimumRefreshTimePerUser"] * 1000);
+        var cursesAndBlessingsHtml = await getCursesAndBlessingsDisplayHtml(sliceAndDiceData);
+
+        updateCursesAndBlessingsElement(cursesAndBlessingsHtml);
+    }else {
+        console.log("updateData called but minimum refresh time has not elapsed");
+    }
+
+    //update again based on timer - uncomment this if want to always do a refresh automatically based on a time period instead of based on user interaction
+    //setTimeout(updateData, broadcasterConfigData["minimumRefreshTimePerUser"] * 1000);
+}
+
+function hasMinimumRefreshTimeHasElapsedSinceLastUpdate(currentTime){
+    var minimumRefreshTimePerUserInMs = broadcasterConfigData["minimumRefreshTimePerUser"] * 1000;
+    var elapsedTime = Math.floor(currentTime - lastUpdatedTime);
+    console.log("elapsed time since last update: " + elapsedTime/1000)
+
+    if ( elapsedTime > minimumRefreshTimePerUserInMs ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function updateLastUpdatedTime(currentTime){
+    lastUpdatedTime = currentTime;
 }
 
 function getCursesAndBlessingsDisplayHtml(sliceAndDiceData){
@@ -65,7 +95,9 @@ function getCursesAndBlessingsDisplayHtml(sliceAndDiceData){
         		  cursesAndBlessingsDisplayHtml += "<p>";
         		  try{
         		    var curseOrBlessingCostAndDescription = lookupAlmanacCurseOrBlessingTypeAndCostAndDescription(curseOrBlessing);
-        		    cursesAndBlessingsDisplayHtml += curseOrBlessingCostAndDescription.type + "[" + curseOrBlessingCostAndDescription.cost + "]: " + curseOrBlessingCostAndDescription.description;
+        		    var curseOrBlessingCostMarker = curseOrBlessingCostAndDescription.type == "Curse" ? "" : "-";
+        		    cursesAndBlessingsDisplayHtml += "[" + curseOrBlessingCostMarker + curseOrBlessingCostAndDescription.cost + "]: ";
+        		    cursesAndBlessingsDisplayHtml += curseOrBlessingCostAndDescription.description;
         		  }catch(err){
         		    cursesAndBlessingsDisplayHtml += curseOrBlessing + " (DATA_NOT_FOUND)";
         			console.log("Warning: could not find AlmanacCurseDescription for curseOrBlessing '" +  curseOrBlessing + "' due to err: " + err);
@@ -100,11 +132,12 @@ function recordProcessingIssue(processingIssue){
     console.log("PROCESSING_ISSUE: " + processingIssue);
 }
 
-function displayData(cursesAndBlessingsHtml){
+function updateCursesAndBlessingsElement(cursesAndBlessingsHtml){
     $("#cursesAndBlessingsContent").html(cursesAndBlessingsHtml);
 }
 
 function clearDataDisplay(){
+    console.log("clearDataDisplay called");
     //Shouldn't really clear data, that just causes strobing for viewer.  Should probably add a spinner icon while processing...
     //$("#cursesAndBlessings").html("<p>Data update pending...</p>");
     //$("#processingIssues").html("");
@@ -128,6 +161,7 @@ function startShowCursesAndBlessings(){
     isContextDataDisplayed = true;
     hideCursesAndBlessingsHoverIndicator(); //ideally could get the events to handle this calling stopShowContentHoverAreas automatically
     $('#cursesAndBlessingsContent').show();
+    updateData();
 }
 function stopShowCursesAndBlessings(){
     isContextDataDisplayed = false;

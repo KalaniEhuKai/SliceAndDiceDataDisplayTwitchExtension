@@ -3,11 +3,14 @@ If you find yourself looking at this code, I apologize in advance.  I don't real
 
 
 # TODO
-Change it to refresh data on user interaction rather than timer.
+
+Minor issue where after updating data, it immediately does another cursesAndBlessingsHoverTarget mouseenter > updateData call.  But it's within a second so won't fetch data again.
 
 Consider getting rid of all the stuff that makes hover mouse events avoid the edge of the screen to avoid showing things when fullscreen with mouse at edge.  It makes it slightly ugly and adds a lot of complexity, and isn't really necessary with the movement-based hiding.
 
 Change it so that actionable errors are displayed in 'processingIssues' view in the overlay, rather than having streamer troubleshooting say to view console log.
+
+Consider changing it to display curses data when hovering over the settings icon (and have the data show in large window from that area) instead of bottom right.
 
 # Steps for testing:
 1. Zip all of the local files (extension content)
