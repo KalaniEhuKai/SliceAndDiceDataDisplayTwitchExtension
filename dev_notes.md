@@ -3,8 +3,14 @@ If you find yourself looking at this code, I apologize in advance.  I don't real
 
 
 # TODO
-The mouseexit doesnt work consistently when leaving the screen
+
+Confirm that 2nd MSFT OneNote account works
+
 Change it to refresh data on user interaction rather than timer.
+
+Consider getting rid of all the stuff that makes hover mouse events avoid the edge of the screen to avoid showing things when fullscreen with mouse at edge.  It makes it slightly ugly and adds a lot of complexity, and isn't really necessary with the movement-based hiding.
+
+Change it so that actionable errors are displayed in 'processingIssues' view in the overlay, rather than having streamer troubleshooting say to view console log.
 
 # Steps for testing:
 1. Zip all of the local files (extension content)
@@ -39,14 +45,18 @@ To export newer versions of the file:
 # References:
 
 https://dev.twitch.tv/docs/tutorials/extension-101-tutorial-series/config-service/
+
 https://github.com/sonia145/extensions-101/tree/step-2
+
 https://github.com/abdullahmorrison/AlveusTwitchExtension/blob/main/public/index.html
+
 https://dev.twitch.tv/docs/extensions/reference/#helper-configuration
+
 https://discuss.dev.twitch.tv/t/how-does-config-js-work-and-how-to-set-it-up/36758/2
 
 
 
-#Investigation Notes
+# Investigation Notes
 
 ## Trying to get almanac file from google docs
     //Could use REST google APIs as per https://developers.google.com/sheets/api/reference/rest
@@ -58,5 +68,9 @@ https://discuss.dev.twitch.tv/t/how-does-config-js-work-and-how-to-set-it-up/367
     //BUT This doesn't work right due to CORS issue due to google not enabling it since 2014... https://stackoverflow.com/a/28484404 , https://issuetracker.google.com/issues/36759302	
     //So either need to just download the file locally, or would need to create an API key for this
     //I dont really want to create a google cloud project, so just going to download locally
-   //Also, did a bit of an ugly hack where the curses data json is actually a js file which sets a variable to a big json blob, rather than just having actual json data in .json file.
-   //Did this since I was also working with this stuff in a local html page without a  webserer.  Just leaving it since it's simple even if maintenance problem.
+    //Also, did a bit of an ugly hack where the curses data json is actually a js file which sets a variable to a big json blob, rather than just having actual json data in .json file.
+    //Did this since I was also working with this stuff in a local html page without a  webserer.  Just leaving it since it's simple even if maintenance problem.
+   
+## Trying to get it so that hover area will not extend to page edge, but the content will
+    //Most importantly, don't position elments that aren't parent/child at the same location. They just fight for who wins and events get messed up.
+    //mouseover/mouseout get triggered when over/out of the element AND its children.  So if child extends past parent, then so does the mouse events area.

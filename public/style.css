@@ -31,80 +31,119 @@ body, html {
   margin: 0;
 }
 
+.video-overlay-page p{
+     line-height: 1;
+     padding: 5px;
+     margin: 0;
+
+     /*font-size: clamp(.5rem, 2vw, 1.5em);*/
+     font-size: calc(12px + .5vw);
+     color: white;
+}
+
 .video-overlay-page #entirePage {
     /* https://medium.com/developer-rants/what-if-height-100vh-is-bigger-than-your-screen-7f39c62ac170 */
+    /*
     width: 99vw;
     height: 99%;
     min-height: 99%;
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: hidden;
+    */
 
-    //font-size: clamp(.5rem, 2vw, 1.5em);
-    font-size: calc(12px + .5vw);
-    color: white;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+
+    /* If debugging based on positioning */
+    /* background-color:green; */
 }
 
-.video-overlay-page #entirePageExceptBorders {
-    /* so that in full screen mouse at edge won't trigger hover */
-    width: 98%;
-    height: 95%;
-    margin-left: 1.5vw;
-    margin-top: 1.5vw;
-    /*background-color:blue;*/
-}
+.video-overlay-page #entirePageExceptEdge {
+    /* slightly away from edge of page so that in full screen mouse at edge won't trigger hover
+    and extra on bottom as that seems to have some weird detection issues */
+    position: absolute;
+    left: 1px;
+    right: 1px;
+    top: 1px;
+    bottom: 1px;
 
-.video-overlay-page #entirePage p{
-     line-height: 1;
-     padding: 5px;
-     margin: 0;
+    /* If debugging based on positioning */
+    /* background-color:red; */
 }
 
 /*
-.video-overlay-page #entirePageExceptBorders:hover #cursesAndBlessingsContainer {
-  border-style: solid;
-  border-color: blue;
-}
+For showing/hiding the cursesAndBlessings:
+-Want to show the border when hovering inside the page but not within the cursesAndBlessings area
+-Want to show the border and content when hovering inside the cursesAndBlessings area
+-Want to show neither the border or content when not hovering on the page - especially when full screen with mouse at edge of page
 */
 
-.video-overlay-page #cursesAndBlessingsContainer {
-    position: fixed;
+.video-overlay-page #cursesAndBlessingsHoverTarget {
+    position: absolute;
     bottom: 0;
     right: 0;
-    width: 26.5vw;
-    height: 8.75vw;
+    width: 25.5vw;
+    height: 8.9vw;
 
-    /*
-    https://stackoverflow.com/questions/5581799/how-to-stretch-div-height-to-fill-parent-div-css
-    */
-    display: flex;
-
-    border-radius: 1vw;
-    /*border-style: solid;
-    border-color: blue;*/
-
-    margin: 0;
+    /* If debugging based on positioning */
+    /* background-color:yellow; */
 }
 
-.video-overlay-page  #cursesAndBlessings {
+.video-overlay-page #cursesAndBlessingsContentContainer {
     /*
-    https://stackoverflow.com/questions/29467660/how-to-stretch-children-to-fill-cross-axis
+        Fill entire parent
     */
-    flex: 1;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+
+    border-radius: 1vw;
+    border-width: 3px;
+    border-color: blue;
+    /* borer-style is controlled in the script to show/hide the border */
+}
+
+.video-overlay-page  #cursesAndBlessingsContent {
+    /*
+        Fill entire parent
+    */
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+
     overflow: auto;
     display: block;
 
     border-style: solid;
     border-color: blue;
+    border-width: 3px;
     border-radius: 1vw;
 
     background-color:black;
+
+    /* might be needed when displaying other things for debugging, but probably not */
+    z-index:1;
 
     padding-left: .7vw;
     padding-top: .3vw;
 }
 
 /*
+Reference code for investigating if using :hover is any different that mouseover/mouseout
+
+.video-overlay-page #entirePageExceptBorders:hover #cursesAndBlessingsContainer {
+  border-style: solid;
+  border-color: blue;
+}
+
 .video-overlay-page #cursesAndBlessingsContainer:hover #cursesAndBlessings {
     display: flex;
 }

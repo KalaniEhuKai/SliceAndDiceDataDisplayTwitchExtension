@@ -1,5 +1,11 @@
 var broadcasterConfigData;
 
+var isContextDataDisplayed = false;
+
+var isInContext
+
+var mouseNotMovingTimerHandle;
+
 window.Twitch.ext.onAuthorized(function(auth) {
   //console.log('The JWT that will be passed to the EBS is', auth.token);
   //console.log('The channel ID is', auth.channelId);
@@ -27,9 +33,9 @@ async function update(){
 
     var sliceAndDiceData = await getOneDriveSharedFileContents(broadcasterConfigData["sliceAndDiceDataFileShareLink"]);
 
-    var cursesAndBlessings = await getCursesAndBlessingsDisplayHtml(sliceAndDiceData);
+    var cursesAndBlessingsHtml = await getCursesAndBlessingsDisplayHtml(sliceAndDiceData);
 
-    displayData(cursesAndBlessings);
+    displayData(cursesAndBlessingsHtml);
 
     setTimeout(update, broadcasterConfigData["minimumRefreshTimePerUser"] * 1000);
 }
@@ -95,7 +101,7 @@ function recordProcessingIssue(processingIssue){
 }
 
 function displayData(cursesAndBlessingsHtml){
-    $("#cursesAndBlessings").html(cursesAndBlessingsHtml);
+    $("#cursesAndBlessingsContent").html(cursesAndBlessingsHtml);
 }
 
 function clearDataDisplay(){
@@ -107,28 +113,88 @@ function clearDataDisplay(){
 
 
 function initializeAllShowHideElements(){
-    //$('#cursesAndBlessingsContainer').hide();
-    $('#cursesAndBlessings').hide();
+    $('#cursesAndBlessingsContent').hide();
 }
 
-function onMouseHoverEnterEntirePageExceptBorders(){
-    $('#cursesAndBlessingsContainer').css('border', '3px solid blue');
+function startShowContentHoverAreas(){
+    console.log("startShowContentHoverAreas");
+    showCursesAndBlessingsHoverIndicator();
 }
-function onMouseHoverOutEntirePageExceptBorders(){
-    $('#cursesAndBlessingsContainer').css('border', '');
+function stopShowContentHoverAreas(){
+    console.log("stopShowContentHoverAreas");
+    hideCursesAndBlessingsHoverIndicator();
 }
-function onMouseHoverEnterCursesAndBlessings(){
-    $('#cursesAndBlessingsContainer').css('border', '');
-    $('#cursesAndBlessings').show();
+function startShowCursesAndBlessings(){
+    isContextDataDisplayed = true;
+    hideCursesAndBlessingsHoverIndicator(); //ideally could get the events to handle this calling stopShowContentHoverAreas automatically
+    $('#cursesAndBlessingsContent').show();
 }
-function onMouseHoverOutCursesAndBlessings(){
-    $('#cursesAndBlessingsContainer').css('border', '3px solid blue');
-    $('#cursesAndBlessings').hide();
+function stopShowCursesAndBlessings(){
+    isContextDataDisplayed = false;
+    showCursesAndBlessingsHoverIndicator(); //ideally could get the events to handle this calling startShowContentHoverAreas automatically
+    $('#cursesAndBlessingsContent').hide();
     //TODO there's still an issue since this goes to edge of page that if people move mouse out directly from here that it won't dissapear.
     //Probably need to keep variables to see if still inside the entire page without borders to give space on outside, and maybe no do the propagating elements thing
     //Or maybe need to go back to :hover on entire page to put it in a certain state, and then all the mouse outs etc are based on overall state (assuming :hover works better
 }
 
+function unHideEverything(){
+    $('#entirePageExceptEdge').show();
+}
+
+function showCursesAndBlessingsHoverIndicator(){
+    $('#cursesAndBlessingsContentContainer').css('border-style', 'solid');
+}
+
+function hideCursesAndBlessingsHoverIndicator(){
+    $('#cursesAndBlessingsContentContainer').css('border-style', 'none');
+}
+
+function bindAllMouseHoverEvents(){
+    console.log("bindAllMouseHoverEvents");
+
+    $('#entirePageExceptEdge')
+    .on('mouseenter', function (event) {
+        event.stopPropagation();
+        console.log("entirePageExceptEdge mouseenter");
+        startShowContentHoverAreas();
+    })
+    .on('mouseleave', function (event) {
+        event.stopPropagation();
+        console.log("entirePageExceptEdge mouseleave");
+        stopShowContentHoverAreas();
+    });
+
+  $('#cursesAndBlessingsHoverTarget')
+    .on('mouseenter', function (event) {
+        event.stopPropagation();
+        console.log("cursesAndBlessingsHoverTarget mouseenter");
+        startShowCursesAndBlessings();
+    })
+    .on('mouseleave', function (event) {
+        //event.stopPropagation();
+        console.log("cursesAndBlessingsHoverTarget mouseleave");
+        stopShowCursesAndBlessings();
+    });
+
+    //There's an issue (seems related to twitch player controls) where moving mouse out bottom of video window
+    //doesn't trigger mouseout/mouseleave events correctly.
+    //Therefore we want a backup in case things haven't been hidden properly after moving mouse off of video.
+    //Set a timer to hide everything if mouse isn't moving
+    $('#entirePage').mousemove(function(){
+        $('#entirePageExceptEdge').show();
+        clearTimeout(mouseNotMovingTimerHandle);
+        var timeoutTime = isContextDataDisplayed ? 5000 : 2000;
+
+        console.log('setting mouseNotMovingTimer for ' + timeoutTime);
+        mouseNotMovingTimerHandle = setTimeout(function(){
+            $('#entirePageExceptEdge').hide();
+        },timeoutTime);
+    });
+}
+
+
+// MAIN FUNCTION
 
 $(async function() {
     console.log('video_overlay page loaded');
@@ -139,23 +205,5 @@ $(async function() {
 
     initializeAllShowHideElements();
 
-    $('#entirePageExceptBorders')
-    .on('mouseover', function (event) {
-        event.stopPropagation();
-        onMouseHoverEnterEntirePageExceptBorders();
-    })
-    .on('mouseout', function (event) {
-        event.stopPropagation();
-        onMouseHoverOutEntirePageExceptBorders();
-    });
-
-      $('#cursesAndBlessingsContainer')
-        .on('mouseover', function (event) {
-            event.stopPropagation();
-            onMouseHoverEnterCursesAndBlessings();
-        })
-        .on('mouseout', function (event) {
-            event.stopPropagation();
-            onMouseHoverOutCursesAndBlessings();
-        });
+    bindAllMouseHoverEvents();
 });
