@@ -3,14 +3,21 @@ If you find yourself looking at this code, I apologize in advance.  I don't real
 
 
 # TODO
+Consider changing it to display curses data when hovering over the settings icon (and have the data show in large window from that area) instead of bottom right.
+
+Consider getting rid of all the stuff that makes hover mouse events avoid the edge of the screen to avoid showing things when fullscreen with mouse at edge.  It makes it slightly ugly and adds a lot of complexity, and isn't really necessary with the movement-based hiding.
+This is a moot point if switching to the Setting UI area instead of bottom right.
+
+Should really handle that elements change size and positioning based on resolution/fullscreen/scaling setting. Probably should add config settings for this, and then scale and position things in the overlay based on those settings.
+Also if not 16:9 resolution then twitch adds black bar below/above, should ideally handle that too.
+For not just add a Known Issues section.
+Could also look to simplify by just having a hoverover of larger areas for like the settings area, the heroes are, the enemies area (these probably are easier to write algorithms to handle than each specific item's location.)
 
 Minor issue where after updating data, it immediately does another cursesAndBlessingsHoverTarget mouseenter > updateData call.  But it's within a second so won't fetch data again.
 
-Consider getting rid of all the stuff that makes hover mouse events avoid the edge of the screen to avoid showing things when fullscreen with mouse at edge.  It makes it slightly ugly and adds a lot of complexity, and isn't really necessary with the movement-based hiding.
-
 Change it so that actionable errors are displayed in 'processingIssues' view in the overlay, rather than having streamer troubleshooting say to view console log.
 
-Consider changing it to display curses data when hovering over the settings icon (and have the data show in large window from that area) instead of bottom right.
+
 
 # Steps for testing:
 1. Zip all of the local files (extension content)
@@ -86,3 +93,14 @@ https://discuss.dev.twitch.tv/t/how-does-config-js-work-and-how-to-set-it-up/367
 ## Trying to get it so that hover area will not extend to page edge, but the content will
     //Most importantly, don't position elments that aren't parent/child at the same location. They just fight for who wins and events get messed up.
     //mouseover/mouseout get triggered when over/out of the element AND its children.  So if child extends past parent, then so does the mouse events area.
+
+## Fonts
+    //Perfect DOS VGA 437
+    //   https://www.dafont.com/font-comment.php?file=perfect_dos_vga_437
+    //   Using this in the icon images
+    //   This is indicated to be free for whatever use with no license .  See https://www.dafont.com/font-comment.php?file=perfect_dos_vga_437 and also the txt file in the distribution
+    //   Included Thank You for this.
+    //DOS/V re. ANK16
+    //   https://int10h.org/oldschool-pc-fonts/fontlist/font?dos-v_re_ank16
+    //   If using custom fonts for the data display in the future, this might be a good one.
+    //   This is licensed under CC BY-SA 4.0 which is one way compatible with GPLv3.  Just needs appropriate attribution if used.  See https://int10h.org/oldschool-pc-fonts/readme/#legal_stuff

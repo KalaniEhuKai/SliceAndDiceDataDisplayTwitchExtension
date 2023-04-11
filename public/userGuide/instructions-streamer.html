@@ -25,7 +25,7 @@
     <p>This extension requires making your local Slice And Dice data file available online.  You will have to create or use an existing Microsoft Account and install the Microsoft OneDrive Sync program.</p>
     <p><span style="color:#f00;">Warning: </span>Recommended to NOT use this extension if you have internet data caps or pay per usage, as the slice and dice data file gets very large (it contains all run histories).</p>
     <p><span style="color:#f00;">Warning: </span>Recommended to back up your slice and dice data file before using this extension, and frequently afterwards.  While there is no reason to expect that syncing the file will mess it up, it's best to be cautious.</p>
-    <p><span style="color:#f00;">Warning: </span>Recommended to create and use a new Microsoft Account, simply to be cautious about preventing any potential disruption with your existing accounts, in case the usage pattern of the extension might be against terms of service.</p>
+    <p><span style="color:#f00;">Warning: </span>Recommended to create and use a new Microsoft Account, simply to be cautious about preventing any potential disruption with your existing accounts.</p>
   </div>
 
   <div id="steps">
@@ -35,7 +35,7 @@
         <ol>
           <li>Create a new Microsoft account.</li>
           <ul>
-            <li>You can use an existing Microsoft account, but it's recommended to create a new one just to be cautious about preventing any potential disruption with your existing accounts, in case the usage pattern of the extension might be against terms of service.  See UserGuide FAQ for more information.</li>
+            <li>You can use an existing Microsoft account, but it's recommended to create a new one just to be cautious about preventing any potential disruption with your existing accounts.  The extension could be a bit spammy in fetching large shared files, which could be against OneDrive terms of service. (I don't have a reason to think it is, just being cautious)  See UserGuide FAQ for more information.</li>
           </ul>
           <li>Follow <a href="https://www.microsoft.com/en-us/microsoft-365/onedrive/download">this guide</a> to install/setup OneDrive
             <ul>
@@ -79,13 +79,22 @@
     <p>See the troubleshooting section for more ideas to get this working quickly and reliably.</p>
   </div>
 
+  <div id="Known Issues">
+    <h2>Known Issues</h2>
+    <ul>
+      <li>
+        <p>If playing at resolution that's not 16:9 or with game setting for UI Scale other than 0, overlay area sizes will not match up properly with the elements in the game UI.</p>
+      </li>
+    </ul>
+  </div>
+
   <div id="troubleshooting">
     <h2>Troubleshooting</h2>
     <ul>
       <li>
         <p>If you are getting a delay where OneDrive is not syncing your file for a while, try the following:</p>
         <ul>
-          <li>Pause then restart syncing.  Click on onedrive in the notification area. Settings gear icon > Pause syncing > 2 hours.  Click on onedrive in the notification area, and hit unpause at the top. </li>\
+          <li>Pause then restart syncing.  Click on onedrive in the notification area. Settings gear icon > Pause syncing > 2 hours.  Click on onedrive in the notification area, and hit unpause at the top. </li>
           <li>Open the folder where the SND data is Windows explorer, and refresh. Open the Onedrive folder locally in windows explorer, and refresh.  Right click the file > OneDrive > View online .  Maybe it will behave if it knows you're paying attention.</li>
           <li>It could help to do OneDrive->Setting-> Settings-> Uncheck File On-Demand feature.</li>
         </ul>
